@@ -16,7 +16,7 @@
     "react-expanding-textarea": "^2.3.6",
     "react-router-dom": "^6.26.1",
     "sass": "^1.77.8",
-    "vite": "^5.4.2"
+    "vite": "^5.4.8"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.1"
