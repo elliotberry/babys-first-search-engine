@@ -1,12 +1,16 @@
-import react, { useState, useEffect } from "react"
-import "./CrawlLog.scss"
+import React, { useState, useEffect } from "react"
+import { useNavigate, useLocation } from "react-router-dom"
+import "./enqueue/CrawlLog.scss"
 
-const UseCrawlLog = () => {
+const Logs = ({ notify }) => {
+  const location = useLocation()
+  const navigate = useNavigate()
   const [logMessages, setLogMessages] = useState([])
   const [eventSource, setEventSource] = useState(null)
+
   const startLogStream = (crawlId) => {
     const newEventSource = new EventSource(
-      `http://localhost:3000/logs/stream/crawl/${crawlId}`
+      `http://localhost:3000/logs/stream/all`
     )
     setEventSource(newEventSource)
     setLogMessages([])
@@ -36,8 +40,8 @@ const UseCrawlLog = () => {
     }
   }, [eventSource])
 
-  const CrawlLog = () => {
-    return (
+  return (
+    <>
       <div>
         <div id={`log-container ${logMessages.length > 0 ? "active" : ""}`}>
           <h3 className="log-container-label">
@@ -48,8 +52,8 @@ const UseCrawlLog = () => {
           ))}
         </div>
       </div>
-    )
-  }
-  return { CrawlLog, startLogStream }
+    </>
+  )
 }
-export default UseCrawlLog
+
+export default Logs

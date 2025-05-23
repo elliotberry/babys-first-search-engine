@@ -3,7 +3,7 @@ import fastifyCors from '@fastify/cors';
 
 import dotenv from 'dotenv';
 import fs from 'node:fs/promises';
-import path from 'node:path';
+
 import enqueueCrawl from './lib/crawl.js';
 import { push, search, getCrawlById } from './lib/database.js';
 import { createLogEmitter, removeLogEmitter, log, defaultEmitter } from './lib/log.js';
@@ -23,7 +23,7 @@ dotenv.config();
 
 // Create Fastify instance and register plugins
 const fastify = Fastify();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.API_PORT || 3000;
 
 await fastify.register(fastifyCors); // cross-origin resource sharing
 
@@ -68,6 +68,7 @@ fastify.get('/logs', async (request, reply) => {
 });
 
 // Endpoint to enqueue crawl
+//example payload: {"links":["https://example.com"],"crawlName":"example"}
 fastify.post('/enqueue', { schema: validateEnqueue }, async (request, reply) => {
   const id = await enqueueCrawl(request.body);
   log.info('Crawl started successfully');
@@ -75,6 +76,7 @@ fastify.post('/enqueue', { schema: validateEnqueue }, async (request, reply) => 
 });
 
 // Endpoint to query Elasticsearch
+//example query: /search?q=example&p=1
 fastify.get('/search', { schema: validateSearch }, async (request, reply) => {
   try {
     const { p, q } = request.query;
@@ -90,8 +92,6 @@ fastify.get('/alive', async (request, reply) => {
   reply.status(200).send({ alive: true });
 });
 
-
-
 fastify.get('/crawls/:crawlId', async (request, reply) => {
 
   const { crawlId } = request.params;
@@ -105,8 +105,6 @@ fastify.get('/crawls/:crawlId', async (request, reply) => {
 });
 
 fastify.get('/logs/stream/all', async (request, reply) => {
-
- 
   const logEmitter = defaultEmitter;
 
   reply.raw.setHeader('Content-Type', 'text/event-stream');

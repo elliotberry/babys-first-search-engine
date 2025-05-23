@@ -3,7 +3,7 @@ import React from "react"
 import { Routes, Route } from "react-router-dom"
 import Enqueue from "./components/enqueue/Enqueue"
 import Search from "./components/Search"
-import Crawls from "./components/Crawls"
+import Logs from "./components/Logs"
 import Layout from "./Layout"
 import useNotifications from "./components/NotificationQueue"
 
@@ -20,7 +20,7 @@ const App = () => {
         <Route path="/" element={<Layout />}>
           <Route index element={<Search />} />
           <Route path="enqueue" element={<Enqueue notify={notify} />} />
-          <Route path="crawls" element={<Crawls notify={notify} />} />
+          <Route path="logs" element={<Logs notify={notify} />} />
         </Route>
       </Routes>
  

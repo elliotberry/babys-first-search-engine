@@ -15,8 +15,8 @@ function Layout() {
           <li className={`${location.pathname === "/enqueue" ? "active" : ""}`}>
             <Link to="enqueue">Enqueue</Link>
           </li>
-          <li className={`${location.pathname === "/crawls" ? "active" : ""}`}>
-            <Link to="crawls">Crawls</Link>
+          <li className={`${location.pathname === "/logs" ? "active" : ""}`}>
+            <Link to="logs">Logs</Link>
           </li>
         </ul>
       </nav>
